@@ -30,18 +30,21 @@
         <!-- short hand -->
         <button :class="buttonClass">Click Me</button>
 
-        <button :class="button" v-on:click="toggle">Click Me</button>
+        <button v-bind:class="active ? 'text-red' : 'text-green'" v-on:click="toggle">Click Me</button>
+
+        <!-- short hand -->
+        <button :class="active ? 'text-red' : 'text-green'" @click="toggle">Click Me</button>
     </div>
     <script>
         Vue.createApp({
             data() {
             return {
-                buttonClass: 'text-green'
+                active: false
             }
             },
             methods: {
                 toggle() {
-                   alert('clicked')
+                    this.active = !this.active
                 }
             }
         }).mount('#app')
