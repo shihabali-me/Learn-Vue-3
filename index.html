@@ -14,34 +14,35 @@
             display: grid;
             place-items: center;
         }
+        .text-red {
+            color: red;
+        }
+
+        .text-green {
+            color: green;
+        }
     
     </style>
 </head>
 <body>
     <div id="app">
+        <button v-bind:class="buttonClass">Click Me</button>
+        <!-- short hand -->
+        <button :class="buttonClass">Click Me</button>
 
-        <button @click="message = 'Hello Vue!'">Reset</button>
-        <p>
-            <input type="text" v-model="message">
-        </p>
-        <p>
-            {{ message }}-{{ message.length }}
-        </p>
-
+        <button :class="button" v-on:click="toggle">Click Me</button>
     </div>
     <script>
         Vue.createApp({
             data() {
             return {
-                message: 'Hello Vue!'
+                buttonClass: 'text-green'
             }
             },
-            mounted() {
-                setTimeout(
-                    () => {
-                        this.message = "Updated"
-                    }, 3000
-                )
+            methods: {
+                toggle() {
+                   alert('clicked')
+                }
             }
         }).mount('#app')
 
