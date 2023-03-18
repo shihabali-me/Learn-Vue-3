@@ -8,44 +8,25 @@
 </head>
 <body class="h-full grid place-items-center">
     <div id="app">
-        <section v-show="inProgressAssignments.length">
-            <h1 class="font-bold mb-2">In Progress</h1>
-            <ul>
-                <li v-for="assignment in inProgressAssignments" :key="assignment.id">
-                    {{ assignment.name }}
-                    <input type="checkbox" v-model="assignment.completed">
-                </li>
-            </ul>
-        </section>
-
-        <section v-show="completedAssignments.length" class="mt-8">
-            <h1 class="font-bold mb-2">Completed Assignments</h1>
-            <ul>
-                <li v-for="assignment in completedAssignments" :key="assignment.id">
-                    {{ assignment.name }}
-                    <input type="checkbox" v-model="assignment.completed">
-                </li>
-            </ul>
-        </section>
+        <div-component>Click Me</div-component>
         
     </div>
     <script>
         let app = {
-            data() {
-                return {
-                    assignments: [
-                        {id:1, name: 'Finished Project', completed: false},
-                        {id:2, name: 'Read Chapter', completed: false},
-                        {id:3, name: 'Turn in homework', completed: false}
-                    ]
-                }
-            },
-            computed: {
-                inProgressAssignments() {
-                    return this.assignments.filter(assignment => ! assignment.completed)
-                },
-                completedAssignments() {
-                    return this.assignments.filter(assignment => assignment.completed)
+            components: {
+                'div-component': {
+                    template: `
+                        <div class="bg-gray-200 p-4 rounded-lg">
+                            <h1 class="text-2xl font-bold">Hello World</h1>
+                            <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+                            <button class="bg-blue-500 text-white p-2 rounded-lg mt-2">
+                            <slot />
+                            </button>
+                        </div>
+                    `,
+                    mounted() {
+                        alert('Mounted')
+                    }
                 }
             }
         }
