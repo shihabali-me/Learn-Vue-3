@@ -5,32 +5,39 @@
     <title>Ep 3, Lists, Conditionals, and Computed Properties</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes spinner {
+            to {transform: rotate(360deg);}
+        }
+        
+        .is-loading:before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin-top: -10px;
+            margin-left: -10px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            border-top-color: #000;
+            animation: spinner .6s linear infinite;
+        }
+    </style>
 </head>
 <body class="h-full grid place-items-center">
     <div id="app">
         <div-component>Click Me</div-component>
-        
+        <app-button buttontype="danger">Click Me</app-button>
+        <app-button processing="true">Click Me</app-button>
     </div>
-    <script>
-        let app = {
-            components: {
-                'div-component': {
-                    template: `
-                        <div class="bg-gray-200 p-4 rounded-lg">
-                            <h1 class="text-2xl font-bold">Hello World</h1>
-                            <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                            <button class="bg-blue-500 text-white p-2 rounded-lg mt-2">
-                            <slot />
-                            </button>
-                        </div>
-                    `,
-                    mounted() {
-                        alert('Mounted')
-                    }
-                }
-            }
-        }
-        Vue.createApp(app).mount('#app')
+
+    <script type="module">
+        import App from './js/components/App.js'
+
+        Vue.createApp(App).mount('#app')
     </script>
 </body>
 </html>
