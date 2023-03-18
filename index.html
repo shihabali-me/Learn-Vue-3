@@ -8,20 +8,20 @@
 </head>
 <body class="h-full grid place-items-center">
     <div id="app">
-        <section>
+        <section v-show="inProgressAssignments.length">
             <h1 class="font-bold mb-2">In Progress</h1>
             <ul>
-                <li v-for="assignment in assignments.filter(a=> ! a.completed)" :key="assignment.id">
+                <li v-for="assignment in inProgressAssignments" :key="assignment.id">
                     {{ assignment.name }}
                     <input type="checkbox" v-model="assignment.completed">
                 </li>
             </ul>
         </section>
 
-        <section v-show="assignments.filter(a => a.completed).length" class="mt-8">
+        <section v-show="completedAssignments.length" class="mt-8">
             <h1 class="font-bold mb-2">Completed Assignments</h1>
             <ul>
-                <li v-for="assignment in assignments.filter(a => a.completed)" :key="assignment.id">
+                <li v-for="assignment in completedAssignments" :key="assignment.id">
                     {{ assignment.name }}
                     <input type="checkbox" v-model="assignment.completed">
                 </li>
@@ -38,6 +38,14 @@
                         {id:2, name: 'Read Chapter', completed: false},
                         {id:3, name: 'Turn in homework', completed: false}
                     ]
+                }
+            },
+            computed: {
+                inProgressAssignments() {
+                    return this.assignments.filter(assignment => ! assignment.completed)
+                },
+                completedAssignments() {
+                    return this.assignments.filter(assignment => assignment.completed)
                 }
             }
         }
