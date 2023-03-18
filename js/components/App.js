@@ -1,8 +1,10 @@
-import DivComponent from './DivComponent.js';
-import AppButton from './AppButton.js';
+import Assignments from "./Assignments.js"
+
 export default {
     components: {
-        'div-component': DivComponent,
-        'app-button': AppButton
+        Assignments
     },
+    template: `
+            <assignments></assignments>
+        `,
 }
