@@ -12,10 +12,8 @@ export default {
                     <span class="text-sm text-gray-500">({{ assignments.length }})</span>
                 </h1>
                 <assignment-tags 
+                    v-model:selectedTag="selectedTag"
                     :initialTags="assignments.map(a => a.tag)"
-                    :currentTag="selectedTag"
-                    @change="selectedTag = $event"
-
                 >
                 </assignment-tags>
                 <ul class="border border-gray-600 divide-y divide-gray-600 mt-6">
