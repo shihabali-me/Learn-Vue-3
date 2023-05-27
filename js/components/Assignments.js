@@ -6,34 +6,32 @@ export default {
         AssignmentCreate
     },
     template: `
-        <section class="space-y-2">
-            <assignment-list :assignments="filters.inProgress" title="In Progress Assignments"></assignment-list>
-            <assignment-list :assignments="filters.completed" title="Completed Assignments"></assignment-list>
-            <assignment-create @add="add"></assignment-create>
-            
+        <section class="flex gap-8">
+            <assignment-list 
+                :assignments="filters.inProgress" 
+                title="In Progress Assignments"
+            >
+                    <assignment-create 
+                        @add="add"
+                    >
+                    </assignment-create>
+            </assignment-list>
+
+            <div v-show="showCompleted">
+                <assignment-list 
+                    :assignments="filters.completed" 
+                    title="Completed Assignments" 
+                    can-toggle 
+                    @toggle="showCompleted = !showCompleted">
+                </assignment-list>
+            </div>
+
         </section>
         `,
     data() {
         return {
-            assignments: [{
-                    id: 1,
-                    name: 'Finished Project',
-                    completed: false,
-                    tag: 'Science'
-                },
-                {
-                    id: 2,
-                    name: 'Read Chapter 4',
-                    completed: false,
-                    tag: 'Math'
-                },
-                {
-                    id: 3,
-                    name: 'Turn in homework',
-                    completed: false,
-                    tag: 'Science'
-                }
-            ],
+            assignments: [],
+            showCompleted: true
         }
     },
     computed: {
@@ -43,6 +41,13 @@ export default {
                 completed: this.assignments.filter(assignment => assignment.completed)
             }
         }
+    },
+    created() {
+        fetch('http://localhost:3000/assignments')
+            .then(response => response.json())
+            .then(data => {
+                this.assignments = data
+            })
     },
 
     methods: {

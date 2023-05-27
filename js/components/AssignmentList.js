@@ -6,11 +6,19 @@ export default {
         AssignmentTags
     },
     template: `
-            <section v-show="assignments.length">
-                <h1 class="font-bold mb-2">
-                    {{ title }}
-                    <span class="text-sm text-gray-500">({{ assignments.length }})</span>
-                </h1>
+            <section v-show="assignments.length" class="w-62">
+                <div class="flex justify-between item-start">
+                    <h1 class="font-bold mb-2">
+                        {{ title }}
+                        <span class="text-sm text-gray-500">({{ assignments.length }})</span>
+                    </h1>
+                    <button 
+                        v-show="canToggle"
+                        @click="$emit('toggle')"
+                        >
+                        &times;
+                    </button>
+                </div>
                 <assignment-tags 
                     v-model:selectedTag="selectedTag"
                     :initialTags="assignments.map(a => a.tag)"
@@ -23,6 +31,7 @@ export default {
                         :assignment="assignment"
                     ></assignment>
                 </ul>
+                <slot></slot>
             </section>
             `,
     props: {
@@ -30,7 +39,11 @@ export default {
             type: Array,
             required: true
         },
-        title: String
+        title: String,
+        canToggle: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
