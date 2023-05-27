@@ -1,7 +1,9 @@
 import Assignment from './Assignment.js';
+import AssignmentTags from './AssignmentTags.js';
 export default {
     components: {
-        Assignment
+        Assignment,
+        AssignmentTags
     },
     template: `
             <section v-show="assignments.length">
@@ -9,16 +11,13 @@ export default {
                     {{ title }}
                     <span class="text-sm text-gray-500">({{ assignments.length }})</span>
                 </h1>
-                <div class="flex gap-2">
-                    <button 
-                    @click="selectedTag = tag"
-                    v-for="tag in tags" 
-                    class="border rounded px-1 py-px text-sm"
-                    :class="{'bg-blue-600 text-white': selectedTag === tag}"
-                    >
-                        {{ tag }}
-                    </button>
-                </div>
+                <assignment-tags 
+                    :initialTags="assignments.map(a => a.tag)"
+                    :currentTag="selectedTag"
+                    @change="selectedTag = $event"
+
+                >
+                </assignment-tags>
                 <ul class="border border-gray-600 divide-y divide-gray-600 mt-6">
                     <assignment 
                         v-for="assignment in filteredAssignments" 
@@ -48,9 +47,6 @@ export default {
             }
             return this.assignments.filter(a => a.tag === this.selectedTag)
         },
-        tags() {
-            //return this.assignments.map(a => a.tag)
-            return ['All', ...new Set(this.assignments.map(a => a.tag))]
-        }
+    
     }
 }
